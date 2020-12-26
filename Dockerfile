@@ -1,0 +1,1 @@
+FROM digitsy/kafka-magic
