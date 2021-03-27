@@ -1,15 +1,23 @@
 version: '3.7'
 services:
-  magic:
-    build: ./
+  kafka-magic:
+    container_name: kafka-magic
     image: kafka-magic:2.0.3.4
+    build: ./
     restart: always
     ports:
       - "9090:80"
-    volumes:
-      - .:/config
+    networks:
+      - default
     environment:
       KMAGIC_ALLOW_TOPIC_DELETE: "true"
       KMAGIC_CONFIG_STORE_TYPE: "file"
       KMAGIC_CONFIG_STORE_CONNECTION: "Data Source=/config/KafkaMagicConfig.db;"
       KMAGIC_CONFIG_ENCRYPTION_KEY: "ENTER_YOUR_KEY_HERE"
+    volumes:
+      - .:/config
+
+networks:
+  default:
+    external:
+      name: kafka-network
